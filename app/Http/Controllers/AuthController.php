@@ -37,7 +37,7 @@ class AuthController extends Controller
             Session::put('api_token', $response['data']['access_token']);
             Session::put('user', $response['data']['user']);
 
-            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+            return redirect()->route('dashboard');
         }
 
 
