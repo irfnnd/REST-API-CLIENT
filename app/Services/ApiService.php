@@ -14,7 +14,7 @@ class ApiService
     public function __construct()
     {
         $this->client = new Client();
-        $this->baseUrl = config(env('API_BASE_URL'));
+        $this->baseUrl = env('API_BASE_URL');
     }
 
     protected function getHeaders()

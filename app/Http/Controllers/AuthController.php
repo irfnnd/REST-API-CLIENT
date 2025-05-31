@@ -33,12 +33,13 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         $response = $this->apiService->login($credentials);
 
-        if (isset($response['success']) && $response['success'] && isset($response['token'])) {
-            Session::put('api_token', $response['token']);
-            Session::put('user', $response['user']);
+        if (isset($response['success']) && $response['success'] && isset($response['data']['access_token'])) {
+            Session::put('api_token', $response['data']['access_token']);
+            Session::put('user', $response['data']['user']);
 
             return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         }
+
 
         return back()->withErrors(['email' => 'Email atau password salah'])->withInput();
     }

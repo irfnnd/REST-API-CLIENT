@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">
+            <a class="navbar-brand" href="#">
                 <i class="bi bi-mortarboard"></i> Academic System
             </a>
 
@@ -22,13 +22,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="#">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('mahasiswa.index') }}">Mahasiswa</a>
+                        <a class="nav-link" href="#">Mahasiswa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dosen.index') }}">Dosen</a>
+                        <a class="nav-link" href="#">Dosen</a>
                     </li>
                 </ul>
 
