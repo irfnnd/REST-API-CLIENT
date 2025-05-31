@@ -68,21 +68,33 @@ class ApiService
     }
 
     public function post($endpoint, $data)
-    {
-        try {
-            $response = $this->client->post($this->baseUrl . $endpoint, [
-                'headers' => $this->getHeaders(),
-                'json' => $data
-            ]);
+{
+    try {
+        $response = $this->client->post($this->baseUrl . $endpoint, [
+            'headers' => $this->getHeaders(),
+            'json' => $data
+        ]);
 
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (RequestException $e) {
-            return [
-                'success' => false,
-                'message' => 'Request failed: ' . $e->getMessage()
-            ];
+        return json_decode($response->getBody()->getContents(), true);
+    } catch (RequestException $e) {
+        $body = $e->getResponse()?->getBody()?->getContents();
+
+        $decoded = json_decode($body, true);
+
+        // Jika respons error validasi berupa JSON
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            return $decoded;
         }
+
+        // Jika bukan JSON, fallback dengan pesan umum
+        return [
+            'success' => false,
+            'message' => 'Request failed: ' . $e->getMessage(),
+            'raw_response' => $body,
+        ];
     }
+}
+
 
     public function put($endpoint, $data)
     {
