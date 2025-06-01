@@ -10,6 +10,17 @@
 </div>
 
 <div class="row">
+    <div class="col-md-6 col-lg-6 mb-4">
+        <div class="card bg-light">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Profil</h5>
+            </div>
+            <div class="card-body">
+                <p>M. Irfandi Atarza</p>
+                <p class="mb-1">NIM : 2217020039</p>
+            </div>
+        </div>
+    </div>
     <div class="col-md-6 col-lg-3 mb-4">
         <div class="card bg-primary text-white">
             <div class="card-body">
@@ -24,7 +35,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="" class="text-white text-decoration-none">
+                <a href="{{ route('mahasiswa.index') }}" class="text-white text-decoration-none">
                     Lihat Detail <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
@@ -45,7 +56,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="" class="text-white text-decoration-none">
+                <a href="{{ route('dosen.index') }}" class="text-white text-decoration-none">
                     Lihat Detail <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
@@ -75,10 +86,10 @@
                     <div class="col-md-6">
                         <h6>Menu Navigasi:</h6>
                         <div class="d-grid gap-2">
-                            <a href="" class="btn btn-outline-primary">
+                            <a href="{{ route('mahasiswa.index') }}" class="btn btn-outline-primary">
                                 <i class="bi bi-people"></i> Kelola Mahasiswa
                             </a>
-                            <a href="" class="btn btn-outline-success">
+                            <a href="{{ route('dosen.index') }}" class="btn btn-outline-success">
                                 <i class="bi bi-person-badge"></i> Kelola Dosen
                             </a>
                         </div>

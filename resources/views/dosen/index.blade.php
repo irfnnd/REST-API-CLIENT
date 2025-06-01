@@ -1,26 +1,26 @@
 @extends('layouts.app')
 
-@section('title', 'Data Mahasiswa')
+@section('title', 'Data Dosen')
 
 @section('content')
     <!-- Header Section -->
-    <div class="row my-3">
+    <div class="row">
         <div class="col-12">
             <div
                 class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                 <div>
-                    <h1 class="h3 mb-1 fw-bold text-dark">Data Mahasiswa</h1>
-                    <p class="text-muted mb-0">Kelola data mahasiswa dengan mudah dan efisien</p>
+                    <h1 class="h3 mb-1 fw-bold text-dark">Data Dosen</h1>
+                    <p class="text-muted mb-0">Kelola data Dosen dengan mudah dan efisien</p>
                 </div>
                 <div class="d-flex flex-wrap align-items-start gap-2">
                     <!-- Form Pencarian -->
-                    <form method="GET" action="{{ route('mahasiswa.index') }}" class="flex-grow-1" style="max-width: 600px;">
+                    <form method="GET" action="{{ route('dosen.index') }}" class="flex-grow-1" style="max-width: 600px;">
                         <div class="input-group shadow-sm" >
                             <span class="input-group-text bg-white border-end-0 border-secondary">
                                 <i class="bi bi-search text-muted"></i>
                             </span>
                             <input type="text" name="search" class="form-control border-start-0 border-secondary ps-0 "
-                                placeholder="Cari nama, NIM, atau email..." value="{{ request('search') }}">
+                                placeholder="Cari nama, nip, atau email..." value="{{ request('search') }}">
                             <button class="btn btn-outline-secondary" type="submit">Cari</button>
                         </div>
                     </form>
@@ -31,22 +31,22 @@
                             <i class="bi bi-funnel me-1"></i> Filter
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('mahasiswa.index') }}">Semua Jurusan</a></li>
+                            <li><a class="dropdown-item" href="{{ route('dosen.index') }}">Semua Jurusan</a></li>
                             <li><a class="dropdown-item"
-                                    href="{{ route('mahasiswa.index', ['filter_jurusan' => 'Teknik Informatika']) }}">
+                                    href="{{ route('dosen.index', ['filter_jurusan' => 'Teknik Informatika']) }}">
                                     Teknik Informatika</a></li>
                             <li><a class="dropdown-item"
-                                    href="{{ route('mahasiswa.index', ['filter_jurusan' => 'Sistem Informasi']) }}">
+                                    href="{{ route('dosen.index', ['filter_jurusan' => 'Sistem Informasi']) }}">
                                     Sistem Informasi</a></li>
                             <li><a class="dropdown-item"
-                                    href="{{ route('mahasiswa.index', ['filter_jurusan' => 'Manajemen']) }}">
+                                    href="{{ route('dosen.index', ['filter_jurusan' => 'Manajemen']) }}">
                                     Manajemen</a></li>
                         </ul>
                     </div>
 
                     <!-- Tombol Tambah -->
-                    <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary shadow-sm">
-                        <i class="bi bi-plus-lg me-1"></i> Tambah Mahasiswa
+                    <a href="{{ route('dosen.create') }}" class="btn btn-primary shadow-sm">
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Dosen
                     </a>
                 </div>
 
@@ -65,8 +65,8 @@
                 <div class="text-primary mb-2">
                     <i class="bi bi-people-fill display-6"></i>
                 </div>
-                <h5 class="card-title mb-1">{{ count($mahasiswa ?? []) }}</h5>
-                <p class="card-text text-muted small">Total Mahasiswa</p>
+                <h5 class="card-title mb-1">{{ count($dosen ?? []) }}</h5>
+                <p class="card-text text-muted small">Total Dosen</p>
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
                 <div class="card-header bg-white py-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-0 text-dark fw-semibold">
-                            <i class="bi bi-table me-2"></i>Daftar Mahasiswa
+                            <i class="bi bi-table me-2"></i>Daftar Dosen
                         </h6>
                         {{-- <div class="d-flex gap-2">
                             <a href="#" class="btn btn-sm btn-outline-secondary">
@@ -137,15 +137,15 @@
                 </div>
 
                 <div class="card-body p-0">
-                    @if (empty($mahasiswa))
+                    @if (empty($dosen))
                         <div class="text-center py-5">
                             <div class="mb-4">
                                 <i class="bi bi-inbox display-1 text-muted opacity-50"></i>
                             </div>
-                            <h5 class="text-dark mb-2">Belum ada data mahasiswa</h5>
-                            <p class="text-muted mb-4">Mulai dengan menambahkan data mahasiswa pertama Anda</p>
-                            <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary">
-                                <i class="bi bi-plus-lg me-1"></i> Tambah Mahasiswa Pertama
+                            <h5 class="text-dark mb-2">Belum ada data Dosen</h5>
+                            <p class="text-muted mb-4">Mulai dengan menambahkan data Dosen pertama Anda</p>
+                            <a href="{{ route('dosen.create') }}" class="btn btn-primary">
+                                <i class="bi bi-plus-lg me-1"></i> Tambah Dosen Pertama
                             </a>
                         </div>
                     @else
@@ -159,15 +159,15 @@
                                             </div>
                                         </th>
                                         <th class="border-0 fw-semibold text-dark">No.</th>
-                                        <th class="border-0 fw-semibold text-dark">NIM</th>
-                                        <th class="border-0 fw-semibold text-dark">Mahasiswa</th>
+                                        <th class="border-0 fw-semibold text-dark">NIP</th>
+                                        <th class="border-0 fw-semibold text-dark">dosen</th>
                                         <th class="border-0 fw-semibold text-dark">Jurusan</th>
                                         <th class="border-0 fw-semibold text-dark">Kontak</th>
                                         <th class="border-0 fw-semibold text-dark text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($mahasiswa as $index => $mhs)
+                                    @foreach ($dosen as $index => $mhs)
                                         <tr class="border-bottom">
                                             <td class="ps-4">
                                                 <div class="form-check">
@@ -178,7 +178,7 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>
                                                 <span
-                                                    class="badge bg-light text-dark fw-normal">{{ $mhs['nim'] ?? '-' }}</span>
+                                                    class="badge bg-light text-dark fw-normal">{{ $mhs['nip'] ?? '-' }}</span>
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
@@ -203,17 +203,17 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center gap-1">
-                                                    <a href="{{ route('mahasiswa.show', $mhs['id']) }}"
+                                                    <a href="{{ route('dosen.show', $mhs['id']) }}"
                                                         class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip"
                                                         title="Lihat Detail">
                                                         <i class="bi bi-eye"></i>
                                                     </a>
-                                                    <a href="{{ route('mahasiswa.edit', $mhs['id']) }}"
+                                                    <a href="{{ route('dosen.edit', $mhs['id']) }}"
                                                         class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip"
                                                         title="Edit">
                                                         <i class="bi bi-pencil"></i>
                                                     </a>
-                                                    <form action="{{ route('mahasiswa.destroy', $mhs['id']) }}"
+                                                    <form action="{{ route('dosen.destroy', $mhs['id']) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
@@ -235,13 +235,13 @@
                         <div class="card-footer bg-white border-0 py-3">
                             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
                                 <div class="text-muted small">
-                                    Menampilkan <strong>1-{{ count($mahasiswa) }}</strong> dari
-                                    <strong>{{ count($mahasiswa) }}</strong> data
+                                    Menampilkan <strong>1-{{ count($dosen) }}</strong> dari
+                                    <strong>{{ count($dosen) }}</strong> data
                                 </div>
 
                                 <!-- Custom Pagination -->
-                                @if (isset($mahasiswa) && is_object($mahasiswa) && method_exists($mahasiswa, 'links'))
-                                    {{ $mahasiswa->appends(request()->query())->links('custom.pagination') }}
+                                @if (isset($dosen) && is_object($dosen) && method_exists($dosen, 'links'))
+                                    {{ $dosen->appends(request()->query())->links('custom.pagination') }}
                                 @else
                                     <nav aria-label="Table pagination">
                                         <ul class="pagination pagination-sm mb-0">
@@ -271,7 +271,7 @@
                                 <!-- Items per page selector -->
                                 <div class="d-flex align-items-center gap-2">
                                     <small class="text-muted">Tampilkan:</small>
-                                    <form method="GET" action="{{ route('mahasiswa.index') }}" class="d-inline">
+                                    <form method="GET" action="{{ route('dosen.index') }}" class="d-inline">
                                         @foreach (request()->except('per_page') as $key => $value)
                                             <input type="hidden" name="{{ $key }}"
                                                 value="{{ $value }}">
@@ -431,7 +431,7 @@
                     const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
 
                     if (selectedIds.length === 0) {
-                        alert('Pilih minimal satu item untuk diekspor');
+                        alert('Pilih minipal satu item untuk diekspor');
                         return;
                     }
 
@@ -462,7 +462,7 @@
                     const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
 
                     if (selectedIds.length === 0) {
-                        alert('Pilih minimal satu item untuk dihapus');
+                        alert('Pilih minipal satu item untuk dihapus');
                         return;
                     }
 

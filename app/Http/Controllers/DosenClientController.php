@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ApiService;
 use Illuminate\Http\Request;
 
-class MahasiswaClientController extends Controller
+class DosenClientController extends Controller
 {
     protected $apiService;
 
@@ -16,19 +16,19 @@ class MahasiswaClientController extends Controller
 
     public function index(Request $request)
     {
-        $response = $this->apiService->get('/data-mahasiswa');
-        $mahasiswa = $response['data'] ?? [];
+        $response = $this->apiService->get('/data-dosen');
+        $dosen = $response['data'] ?? [];
 
-        $mahasiswa = collect($mahasiswa)->sortByDesc('created_at')->values()->all();
+        $dosen = collect($dosen)->sortByDesc('created_at')->values()->all();
 
         if ($request->has('filter_jurusan')) {
             $jurusan = $request->filter_jurusan;
-            $mahasiswa = collect($mahasiswa)->where('jurusan', $jurusan)->values()->all();
+            $dosen = collect($dosen)->where('jurusan', $jurusan)->values()->all();
         }
 
         if ($request->has('search')) {
             $search = strtolower($request->search);
-            $mahasiswa = collect($mahasiswa)->filter(function ($mhs) use ($search) {
+            $dosen = collect($dosen)->filter(function ($mhs) use ($search) {
                 return str_contains(strtolower($mhs['nama']), $search) ||
                     str_contains(strtolower($mhs['nim']), $search) ||
                     str_contains(strtolower($mhs['email']), $search);
@@ -37,31 +37,31 @@ class MahasiswaClientController extends Controller
 
         $perPage = $request->get('per_page', 10);
         $currentPage = $request->get('page', 1);
-        $total = count($mahasiswa);
+        $total = count($dosen);
         $offset = ($currentPage - 1) * $perPage;
-        $mahasiswa = array_slice($mahasiswa, $offset, $perPage);
+        $dosen = array_slice($dosen, $offset, $perPage);
 
-        return view('mahasiswa.index', compact('mahasiswa'));
+        return view('dosen.index', compact('dosen'));
     }
 
     public function create()
     {
-        return view('mahasiswa.create');
+        return view('dosen.create');
     }
 
     public function store(Request $request)
     {
 
         // Ambil data dari API
-        $existing = $this->apiService->get('/data-mahasiswa');
+        $existing = $this->apiService->get('/data-dosen');
         $data = $existing['data'] ?? [];
 
         // Validasi manual keunikan NIM dan Email
         // Kirim data ke API
-        $response = $this->apiService->post('/data-mahasiswa', $request->all());
+        $response = $this->apiService->post('/data-dosen', $request->all());
 
         if (isset($response['success']) && $response['success']) {
-            return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil ditambahkan!');
+            return redirect()->route('dosen.index')->with('success', 'Data dosen berhasil ditambahkan!');
         }
         if (isset($response['errors']) && is_array($response['errors'])) {
             return redirect()->back()
@@ -76,33 +76,33 @@ class MahasiswaClientController extends Controller
 
     public function show($id)
     {
-        $response = $this->apiService->get("/data-mahasiswa/{$id}");
+        $response = $this->apiService->get("/data-dosen/{$id}");
 
         if (isset($response['data'])) {
-            return view('mahasiswa.show', ['mahasiswa' => $response['data']]);
+            return view('dosen.show', ['dosen' => $response['data']]);
         }
 
-        return redirect()->route('mahasiswa.index')->withErrors(['error' => 'Data tidak ditemukan']);
+        return redirect()->route('dosen.index')->withErrors(['error' => 'Data tidak ditemukan']);
     }
 
     public function edit($id)
     {
-        $response = $this->apiService->get("/data-mahasiswa/{$id}");
+        $response = $this->apiService->get("/data-dosen/{$id}");
 
         if (isset($response['data'])) {
-            return view('mahasiswa.edit', ['mahasiswa' => $response['data']]);
+            return view('dosen.edit', ['dosen' => $response['data']]);
         }
 
-        return redirect()->route('mahasiswa.index')->withErrors(['error' => 'Data tidak ditemukan']);
+        return redirect()->route('dosen.index')->withErrors(['error' => 'Data tidak ditemukan']);
     }
 
     public function update(Request $request, $id)
     {
 
-        $response = $this->apiService->put("/data-mahasiswa/{$id}", $request->all());
+        $response = $this->apiService->put("/data-dosen/{$id}", $request->all());
 
         if (isset($response['success']) && $response['success']) {
-            return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil diupdate!');
+            return redirect()->route('dosen.index')->with('success', 'Data dosen berhasil diupdate!');
         }
 
         return back()->withErrors(['error' => $response['message'] ?? 'Gagal mengupdate data'])->withInput();
@@ -110,10 +110,10 @@ class MahasiswaClientController extends Controller
 
     public function destroy($id)
     {
-        $response = $this->apiService->delete("/data-mahasiswa/{$id}");
+        $response = $this->apiService->delete("/data-dosen/{$id}");
 
         if (isset($response['success']) && $response['success']) {
-            return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil dihapus!');
+            return redirect()->route('dosen.index')->with('success', 'Data dosen berhasil dihapus!');
         }
 
         return back()->withErrors(['error' => $response['message'] ?? 'Gagal menghapus data']);
@@ -125,21 +125,21 @@ class MahasiswaClientController extends Controller
         if (empty($ids))
             return back()->with('error', 'Tidak ada data yang dipilih');
 
-        $response = $this->apiService->post('/data-mahasiswa/bulk-delete', ['ids' => $ids]);
+        $response = $this->apiService->post('/data-dosen/bulk-delete', ['ids' => $ids]);
 
         return $response['success']
-            ? redirect()->route('mahasiswa.index')->with('success', count($ids) . ' data berhasil dihapus')
+            ? redirect()->route('dosen.index')->with('success', count($ids) . ' data berhasil dihapus')
             : back()->with('error', $response['message'] ?? 'Gagal menghapus data');
     }
 
     // public function export(Request $request)
     // {
-    //     $response = $this->apiService->get('/data-mahasiswa');
-    //     $mahasiswa = $response['data'] ?? [];
+    //     $response = $this->apiService->get('/data-dosen');
+    //     $dosen = $response['data'] ?? [];
 
     //     return $request->format === 'pdf'
-    //         ? $this->exportPdf($mahasiswa)
-    //         : $this->exportExcel($mahasiswa);
+    //         ? $this->exportPdf($dosen)
+    //         : $this->exportExcel($dosen);
     // }
 
     // public function exportSelected(Request $request)
@@ -148,15 +148,15 @@ class MahasiswaClientController extends Controller
     //     if (empty($ids))
     //         return back()->with('error', 'Tidak ada data yang dipilih');
 
-    //     $response = $this->apiService->post('/data-mahasiswa/selected', ['ids' => $ids]);
-    //     $mahasiswa = $response['data'] ?? [];
+    //     $response = $this->apiService->post('/data-dosen/selected', ['ids' => $ids]);
+    //     $dosen = $response['data'] ?? [];
 
-    //     return $this->exportExcel($mahasiswa);
+    //     return $this->exportExcel($dosen);
     // }
 
     // private function exportExcel($data)
     // {
-    //     $filename = 'data_mahasiswa_' . date('Y-m-d_H-i-s') . '.csv';
+    //     $filename = 'data_dosen_' . date('Y-m-d_H-i-s') . '.csv';
 
     //     $headers = [
     //         'Content-Type' => 'text/csv',
@@ -177,7 +177,7 @@ class MahasiswaClientController extends Controller
 
     // private function exportPdf($data)
     // {
-    //     $html = '<h1>Data Mahasiswa</h1>';
+    //     $html = '<h1>Data dosen</h1>';
     //     $html .= '<table border="1" cellpadding="5">';
     //     $html .= '<tr><th>NIM</th><th>Nama</th><th>Email</th><th>Jurusan</th><th>Telepon</th></tr>';
 

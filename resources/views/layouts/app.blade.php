@@ -14,7 +14,7 @@
                 <i class="bi bi-mortarboard"></i> Academic System
             </a>
 
-            @if(Session::has('api_token'))
+            {{-- @if(Session::has('api_token')) --}}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -22,17 +22,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Dashboard</a>
+                        <a class="nav-link <?= request()->routeIs('dashboard') ? 'active' : '' ?>" href="{{ route('dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Mahasiswa</a>
+                        <a class="nav-link <?= request()->routeIs('mahasiswa.index') ? 'active' : '' ?>" href="{{ route('mahasiswa.index') }}">Mahasiswa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Dosen</a>
+                        <a class="nav-link <?= request()->routeIs('dosen.index') ? 'active' : '' ?>" href="{{ route('dosen.index') }}">Dosen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= request()->routeIs('data-kampus') ? 'active' : '' ?>" href="{{ route('data-kampus') }}">Data Kampus</a>
                     </li>
                 </ul>
 
-                <div class="navbar-nav">
+                @guest
+
+                    <div class="navbar-nav">
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-person"></i> {{ Session::get('user.name', 'User') }}
@@ -49,8 +54,15 @@
                         </ul>
                     </div>
                 </div>
+                @else
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                    </div>
+                @endguest
             </div>
-            @endif
+            {{-- @endif --}}
         </div>
     </nav>
 
