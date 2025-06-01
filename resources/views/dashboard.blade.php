@@ -27,7 +27,7 @@
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
                         <h6 class="card-title">Total Mahasiswa</h6>
-                        <h2 class="mb-0"></h2>
+                        <h2 class="mb-0"><?=$totalMahasiswa?></h2>
                     </div>
                     <div>
                         <i class="bi bi-people display-4 opacity-50"></i>
@@ -48,7 +48,7 @@
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
                         <h6 class="card-title">Total Dosen</h6>
-                        <h2 class="mb-0"></h2>
+                        <h2 class="mb-0"><?=$totalDosen?></h2>
                     </div>
                     <div>
                         <i class="bi bi-person-badge display-4 opacity-50"></i>

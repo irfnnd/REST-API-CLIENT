@@ -12,8 +12,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth.api')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard'); })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/mahasiswa', App\Http\Controllers\MahasiswaClientController::class);
     Route::resource('/dosen', App\Http\Controllers\DosenClientController::class);
 
